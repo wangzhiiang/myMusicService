@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express()
 
+var fs = require("fs");
 var config = require('./config')
 // https://github.com/Automattic/mongoose
 var mongoose = require('mongoose')
@@ -11,8 +12,8 @@ var bodyParser = require('body-parser')
 var music = require('./models.js')
 
 app.use(express.static('public'))
-var multer  = require('multer');
-var upload = multer({ dest: '/public/upload/'})
+var multer  = require('multer')
+var upload = multer({ dest: 'public/upload/'})
 app.use(cors())
 // 创建 application/json 编码解析
 app.use(bodyParser.json())
@@ -51,10 +52,9 @@ app.get('/api/detail', function (req, res) {
 
 // 
 app.post('/api/uploadFile', upload.array('file'), function (req, res) {
-  console.log(req.files[0])
   let file = req.files[0]
   res.send({
-    url: file.path
+    url: 'http:\\\\localhost:3000' + file.path.replace(/public/, '')
   })
 })
 
